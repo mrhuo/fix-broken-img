@@ -26,7 +26,7 @@
 只需引入脚本：
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js" id="fix-broken-img" data-auto-convert="true"></script>
 ```
 或者加入一些配置：
 
@@ -113,7 +113,7 @@ document.body.appendChild(newImage);
 
 ### CDN（推荐）
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js" id="fix-broken-img" data-auto-convert="true"></script>
 ```
 
 ### NPM

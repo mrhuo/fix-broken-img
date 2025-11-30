@@ -27,7 +27,7 @@ Simply include the script:
 
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js" id="fix-broken-img" data-auto-convert="true"></script>
 ```
 Or add some configuration attributes:
 
@@ -114,7 +114,7 @@ document.body.appendChild(newImage);
 
 ### CDN (Recommended)
 ```html
-<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrhuo/fix-broken-img@latest/src/fix-broken-img.min.js" id="fix-broken-img" data-auto-convert="true"></script>
 ```
 
 ### NPM
