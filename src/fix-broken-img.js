@@ -1,4 +1,20 @@
 /**
+ * HTML 实体编码函数
+ * 将特殊字符转换为 HTML 实体，防止 XSS 和属性设置错误
+ * @param {string} str - 要编码的字符串
+ * @returns {string} 编码后的字符串
+ */
+function encodeHTML(str) {
+  if (typeof str !== 'string') return str;
+  return str
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, '&#39;');
+}
+
+/**
  * fix-broken-img
  * 一个零依赖的 WebComponents 组件，用于修复网站上破损的图片
  * 支持懒加载和图片加载失败时的优雅降级
@@ -285,9 +301,17 @@ function _convertToFixBrokenImg(img, background, textColor) {
   
   const wrapper = document.createElement('fix-broken-img');
   
-  // 复制所有属性到新组件
+  // 复制所有属性到新组件，安全处理包含特殊字符的属性值
   Array.from(img.attributes).forEach(attr => {
-    wrapper.setAttribute(attr.name, attr.value);
+    try {
+      wrapper.setAttribute(attr.name, attr.value);
+    } catch (error) {
+      // 如果设置属性失败（例如包含无效字符），使用安全的方式处理
+      console.warn(`无法设置属性 "${attr.name}"，值: "${attr.value}"`, error);
+      // 使用 HTML 实体编码来处理特殊字符
+      const safeValue = encodeHTML(attr.value);
+      wrapper.setAttribute(attr.name, safeValue);
+    }
   });
   
   // 设置配置参数（仅在非默认值时设置）
