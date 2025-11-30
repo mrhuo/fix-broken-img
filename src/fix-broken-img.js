@@ -288,6 +288,32 @@ function initFixBrokenImg(config = {}) {
 }
 
 /**
+ * 辅助函数：复制计算样式
+ * @param {HTMLImageElement} source
+ * @param {FixBrokenImg} target
+ */
+function _copyComputedStyles(source, target) {
+  const computedStyle = window.getComputedStyle(source);
+  const importantStyles = [
+    "width",
+    "height",
+    "margin",
+    "padding",
+    "border",
+    "border-radius",
+    "position",
+    "float",
+    "vertical-align",
+  ];
+  importantStyles.forEach((prop) => {
+    const value = computedStyle.getPropertyValue(prop);
+    if (value && value !== "auto" && value !== "none" && value !== "0px") {
+      target.style.setProperty(prop, value);
+    }
+  });
+}
+
+/**
  * 转换普通图片为 fix-broken-img 组件
  * @param {HTMLImageElement} img - 要转换的图片元素
  * @param {string} background - 降级背景颜色
@@ -326,8 +352,26 @@ function _convertToFixBrokenImg(img, background, textColor) {
   // 复制样式以确保外观一致
   wrapper.style.cssText = img.style.cssText;
   
-  // 替换原图片为受保护的组件
-  img.parentNode.replaceChild(wrapper, img);
+  // 根据图片加载状态决定复制时机
+  if (img.complete) {
+    // 图片已经加载完成，立即复制计算样式
+    _copyComputedStyles(img, wrapper);
+    // 替换原图片为受保护的组件
+    img.parentNode.replaceChild(wrapper, img);
+  } else {
+    // 图片尚未加载完成，等待加载完成后再复制
+    img.addEventListener('load', () => {
+      _copyComputedStyles(img, wrapper);
+      // 替换原图片为受保护的组件
+      img.parentNode.replaceChild(wrapper, img);
+    }, { once: true });
+    // 同时设置超时保护，防止图片加载失败
+    setTimeout(() => {
+      _copyComputedStyles(img, wrapper);
+      // 替换原图片为受保护的组件
+      img.parentNode.replaceChild(wrapper, img);
+    }, 1000);
+  }
 }
 
 /**
