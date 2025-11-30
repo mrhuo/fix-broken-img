@@ -1,0 +1,23 @@
+{
+  "name": "fix-broken-img",
+  "version": "1.0.0",
+  "description": "一个零依赖的 WebComponents 组件，用于修复网站上破损的图片",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "serve": "npx http-server docs -p 3000 -o"
+  },
+  "keywords": [
+    "webcomponents",
+    "image",
+    "broken-image",
+    "fallback",
+    "lazy-loading"
+  ],
+  "author": "github.com/mrhuo",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
